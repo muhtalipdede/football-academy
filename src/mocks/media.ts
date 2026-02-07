@@ -1,0 +1,125 @@
+import { MediaItem, Notification } from '../types';
+
+/**
+ * Mock medya verileri
+ */
+export const mockMedia: MediaItem[] = [
+  {
+    id: 'media-001',
+    type: 'photo',
+    title: 'U10 Antrenman Fotoğrafları',
+    url: 'https://picsum.photos/800/600?random=1',
+    thumbnailUrl: 'https://picsum.photos/200/200?random=1',
+    uploadDate: '2026-02-05T16:00:00Z',
+    uploadedBy: 'Serkan Öztürk',
+    ageGroupIds: ['ag-u10'],
+    description: 'Bu haftaki teknik antrenman fotoğrafları',
+  },
+  {
+    id: 'media-002',
+    type: 'photo',
+    title: 'U13 vs Beşiktaş Maç Fotoğrafları',
+    url: 'https://picsum.photos/800/600?random=2',
+    thumbnailUrl: 'https://picsum.photos/200/200?random=2',
+    uploadDate: '2026-02-01T17:00:00Z',
+    uploadedBy: 'Ahmet Kaya',
+    ageGroupIds: ['ag-u13'],
+    description: 'Beşiktaş maçından kareler',
+  },
+  {
+    id: 'media-003',
+    type: 'video',
+    title: 'Haftalık En İyi Goller',
+    url: 'https://example.com/video1.mp4',
+    thumbnailUrl: 'https://picsum.photos/200/200?random=3',
+    uploadDate: '2026-02-04T12:00:00Z',
+    uploadedBy: 'Mehmet Yılmaz',
+    ageGroupIds: [],
+    description: 'Bu haftanın en güzel golleri',
+  },
+  {
+    id: 'media-004',
+    type: 'document',
+    title: 'Sezon Takvimi 2025-2026',
+    url: 'https://example.com/calendar.pdf',
+    uploadDate: '2025-09-01T10:00:00Z',
+    uploadedBy: 'Mehmet Yılmaz',
+    ageGroupIds: [],
+    description: 'Yıllık antrenman ve maç takvimi',
+    fileSize: '2.3 MB',
+    mimeType: 'application/pdf',
+  },
+  {
+    id: 'media-005',
+    type: 'document',
+    title: 'Sağlık Raporu Formu',
+    url: 'https://example.com/health-form.pdf',
+    uploadDate: '2025-09-01T10:00:00Z',
+    uploadedBy: 'Mehmet Yılmaz',
+    ageGroupIds: [],
+    description: 'Sporcu sağlık raporu başvuru formu',
+    fileSize: '540 KB',
+    mimeType: 'application/pdf',
+  },
+  {
+    id: 'media-006',
+    type: 'photo',
+    title: 'U8 Eğlenceli Antrenman',
+    url: 'https://picsum.photos/800/600?random=4',
+    thumbnailUrl: 'https://picsum.photos/200/200?random=4',
+    uploadDate: '2026-02-04T11:00:00Z',
+    uploadedBy: 'Burak Acar',
+    ageGroupIds: ['ag-u8'],
+    description: 'Minik sporcularımızın eğlenceli anları',
+  },
+];
+
+/**
+ * Mock bildirim verileri
+ */
+export const mockNotifications: Notification[] = [
+  {
+    id: 'notif-001',
+    title: 'Yeni Duyuru',
+    body: 'Kış Turnuvası kayıtları başladı!',
+    date: '2026-02-06T09:00:00Z',
+    isRead: false,
+    type: 'announcement',
+    targetId: 'ann-001',
+  },
+  {
+    id: 'notif-002',
+    title: 'Antrenman Hatırlatma',
+    body: 'Bugün saat 15:00\'de Teknik Antrenman var',
+    date: '2026-02-07T08:00:00Z',
+    isRead: false,
+    type: 'training',
+    targetId: 'training-001',
+  },
+  {
+    id: 'notif-003',
+    title: 'Maç Hatırlatma',
+    body: 'U10 Lig Maçı - 11 Şubat Çarşamba',
+    date: '2026-02-09T10:00:00Z',
+    isRead: false,
+    type: 'match',
+    targetId: 'match-001',
+  },
+  {
+    id: 'notif-004',
+    title: 'Ödeme Hatırlatma',
+    body: 'Şubat aidatınızın son ödeme tarihi 15 Şubat',
+    date: '2026-02-01T10:00:00Z',
+    isRead: true,
+    type: 'payment',
+    targetId: 'pay-002',
+  },
+  {
+    id: 'notif-005',
+    title: 'Saha Değişikliği',
+    body: 'Saha 2 bakımda, antrenmanlar Saha 1\'de',
+    date: '2026-02-05T14:00:00Z',
+    isRead: true,
+    type: 'general',
+  },
+];

@@ -1,0 +1,73 @@
+import { Announcement } from '../types';
+
+/**
+ * Mock duyuru verileri
+ */
+export const mockAnnouncements: Announcement[] = [
+  {
+    id: 'ann-001',
+    title: 'Kış Turnuvası Kayıtları Başladı!',
+    content: 'Sevgili veliler ve sporcular, 2026 Kış Turnuvası için kayıtlar başlamıştır. U10, U11 ve U12 yaş grupları turnuvaya katılacaktır. Son kayıt tarihi 20 Şubat 2026\'dır. Detaylı bilgi için antrenörlerinizle iletişime geçiniz.',
+    date: '2026-02-06T09:00:00Z',
+    authorId: 'user-admin-001',
+    authorName: 'Mehmet Yılmaz',
+    ageGroupIds: ['ag-u10', 'ag-u11', 'ag-u12'],
+    priority: 'high',
+    isRead: false,
+  },
+  {
+    id: 'ann-002',
+    title: 'Saha Bakım Çalışması',
+    content: 'Saha 2 - Çim sahasında bakım çalışması yapılacaktır. 10-12 Şubat tarihleri arasında bu saha kullanılamayacaktır. Antrenmanlar Saha 1\'e alınmıştır.',
+    date: '2026-02-05T14:00:00Z',
+    authorId: 'user-admin-001',
+    authorName: 'Mehmet Yılmaz',
+    ageGroupIds: [],
+    priority: 'medium',
+    isRead: true,
+  },
+  {
+    id: 'ann-003',
+    title: 'U13 Lig Maçı Ertelendi',
+    content: 'Hava koşulları nedeniyle 8 Şubat\'ta planlan U13 lig maçı 15 Şubat\'a ertelenmiştir. Yeni saat ve saha bilgisi daha sonra paylaşılacaktır.',
+    date: '2026-02-04T16:30:00Z',
+    authorId: 'user-coach-001',
+    authorName: 'Ahmet Kaya',
+    ageGroupIds: ['ag-u13'],
+    priority: 'urgent',
+    isRead: false,
+  },
+  {
+    id: 'ann-004',
+    title: 'Şubat Aidatları Hakkında',
+    content: 'Şubat ayı aidat ödemeleri için son tarih 15 Şubat 2026\'dır. Gecikme durumunda %10 gecikme bedeli uygulanacaktır. Ödeme bilgileri için lütfen yönetimle iletişime geçiniz.',
+    date: '2026-02-01T10:00:00Z',
+    authorId: 'user-admin-001',
+    authorName: 'Mehmet Yılmaz',
+    ageGroupIds: [],
+    priority: 'high',
+    isRead: true,
+  },
+  {
+    id: 'ann-005',
+    title: 'Yeni Antrenör Katılımı',
+    content: 'Akademimize yeni kaleci antrenörü Burak Acar katılmıştır. Burak Hoca, UEFA C lisanslı olup 5 yıllık deneyime sahiptir. Kendisi U8 ve U9 yaş gruplarında görev alacaktır. Hoş geldiniz!',
+    date: '2026-01-28T11:00:00Z',
+    authorId: 'user-admin-001',
+    authorName: 'Mehmet Yılmaz',
+    ageGroupIds: [],
+    priority: 'low',
+    isRead: true,
+  },
+  {
+    id: 'ann-006',
+    title: 'U10 Performans Değerlendirmesi',
+    content: 'U10 yaş grubunun dönem sonu performans değerlendirme raporları hazırlanmıştır. Velilerimiz uygulama üzerinden çocuklarının gelişim raporlarını inceleyebilir.',
+    date: '2026-01-25T09:00:00Z',
+    authorId: 'user-coach-002',
+    authorName: 'Serkan Öztürk',
+    ageGroupIds: ['ag-u10'],
+    priority: 'medium',
+    isRead: true,
+  },
+];
