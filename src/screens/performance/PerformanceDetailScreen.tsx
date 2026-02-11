@@ -21,7 +21,7 @@ export const PerformanceDetailScreen: React.FC<{ route: any }> = ({ route }) => 
   const player = mockPlayers.find((p) => p.id === playerId);
   const reports = mockPerformanceReports.filter((r) => r.playerId === playerId);
   const latestReport = reports.length > 0 ? reports[reports.length - 1] : null;
-  const ageGroup = mockAgeGroups.find((ag) => ag.id === player?.ageGroupId);
+  const ageGroup = mockAgeGroups.find((ag) => player?.ageGroupIds?.includes(ag.id));
 
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 500);
@@ -31,35 +31,14 @@ export const PerformanceDetailScreen: React.FC<{ route: any }> = ({ route }) => 
   if (loading) return <LoadingIndicator />;
   if (!player) return <View style={styles.container}><Text>Oyuncu bulunamadı</Text></View>;
 
-  const technicalLabels: Record<string, string> = {
-    ballControl: 'Top Kontrolü',
-    passing: 'Pas',
-    shooting: 'Şut',
-    dribbling: 'Dribling',
-    heading: 'Kafa Vuruşu',
-  };
-
-  const physicalLabels: Record<string, string> = {
-    speed: 'Hız',
-    stamina: 'Dayanıklılık',
-    agility: 'Çeviklik',
-    strength: 'Güç',
-    flexibility: 'Esneklik',
-  };
-
-  const disciplineLabels: Record<string, string> = {
-    attendance: 'Devamlılık',
-    punctuality: 'Dakiklik',
-    teamwork: 'Takım Çalışması',
-    attitude: 'Tutum',
-    effort: 'Çaba',
-  };
+  const getAvg = (metrics: { score: number; maxScore: number }[]) =>
+    metrics.reduce((sum, m) => sum + (m.score / m.maxScore) * 100, 0) / metrics.length;
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       {/* Oyuncu Başlık */}
       <View style={styles.header}>
-        <Avatar name={player.name} size="lg" />
+        <Avatar name={player.name} size={64} />
         <Text style={styles.playerName}>{player.name}</Text>
         <Text style={styles.ageGroupText}>{ageGroup?.name || '-'} • {player.position}</Text>
         {latestReport && (
@@ -76,9 +55,9 @@ export const PerformanceDetailScreen: React.FC<{ route: any }> = ({ route }) => 
         <View style={styles.content}>
           {/* Genel Skor */}
           {(() => {
-            const techAvg = Object.values(latestReport.technical).reduce((a, b) => a + b, 0) / Object.values(latestReport.technical).length;
-            const physAvg = Object.values(latestReport.physical).reduce((a, b) => a + b, 0) / Object.values(latestReport.physical).length;
-            const discAvg = Object.values(latestReport.discipline).reduce((a, b) => a + b, 0) / Object.values(latestReport.discipline).length;
+            const techAvg = getAvg(latestReport.technical);
+            const physAvg = getAvg(latestReport.physical);
+            const discAvg = getAvg(latestReport.discipline);
             const overall = Math.round((techAvg + physAvg + discAvg) / 3);
             const color = overall >= 80 ? COLORS.success : overall >= 60 ? COLORS.warning : COLORS.error;
             return (
@@ -97,35 +76,35 @@ export const PerformanceDetailScreen: React.FC<{ route: any }> = ({ route }) => 
           })()}
 
           {/* Teknik Yetenekler */}
-          <SectionHeader title="Teknik Yetenekler" icon="football-outline" />
+          <SectionHeader title="Teknik Yetenekler" />
           <View style={styles.skillCard}>
-            {Object.entries(latestReport.technical).map(([key, value]) => (
-              <SkillBar key={key} label={technicalLabels[key] || key} value={value as number} />
+            {latestReport.technical.map((metric) => (
+              <SkillBar key={metric.category} label={metric.category} value={Math.round((metric.score / metric.maxScore) * 100)} />
             ))}
           </View>
 
           {/* Fiziksel Özellikler */}
-          <SectionHeader title="Fiziksel Özellikler" icon="barbell-outline" />
+          <SectionHeader title="Fiziksel Özellikler" />
           <View style={styles.skillCard}>
-            {Object.entries(latestReport.physical).map(([key, value]) => (
-              <SkillBar key={key} label={physicalLabels[key] || key} value={value as number} />
+            {latestReport.physical.map((metric) => (
+              <SkillBar key={metric.category} label={metric.category} value={Math.round((metric.score / metric.maxScore) * 100)} />
             ))}
           </View>
 
           {/* Disiplin */}
-          <SectionHeader title="Disiplin & Davranış" icon="ribbon-outline" />
+          <SectionHeader title="Disiplin & Davranış" />
           <View style={styles.skillCard}>
-            {Object.entries(latestReport.discipline).map(([key, value]) => (
-              <SkillBar key={key} label={disciplineLabels[key] || key} value={value as number} />
+            {latestReport.discipline.map((metric) => (
+              <SkillBar key={metric.category} label={metric.category} value={Math.round((metric.score / metric.maxScore) * 100)} />
             ))}
           </View>
 
           {/* Antrenör Yorumu */}
-          {latestReport.coachNotes && (
+          {latestReport.notes && (
             <>
-              <SectionHeader title="Antrenör Yorumu" icon="chatbubble-outline" />
+              <SectionHeader title="Antrenör Yorumu" />
               <View style={styles.notesCard}>
-                <Text style={styles.notesText}>{latestReport.coachNotes}</Text>
+                <Text style={styles.notesText}>{latestReport.notes}</Text>
               </View>
             </>
           )}

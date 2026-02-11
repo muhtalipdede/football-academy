@@ -9,7 +9,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS, SPACING, FONT_SIZES, BORDER_RADIUS, FONT_WEIGHTS, SHADOWS } from '../../constants/theme';
 import { LoadingIndicator, Badge } from '../../components/atoms';
-import { mockMediaItems } from '../../mocks/media';
+import { mockMedia } from '../../mocks/media';
 import { formatDate } from '../../utils/helpers';
 
 const { width } = Dimensions.get('window');
@@ -18,7 +18,7 @@ export const MediaDetailScreen: React.FC<{ route: any }> = ({ route }) => {
   const { mediaId } = route.params;
   const [loading, setLoading] = useState(true);
 
-  const media = mockMediaItems.find((m) => m.id === mediaId);
+  const media = mockMedia.find((m) => m.id === mediaId);
 
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 400);
@@ -58,27 +58,14 @@ export const MediaDetailScreen: React.FC<{ route: any }> = ({ route }) => {
         )}
 
         <View style={styles.metaCard}>
-          <MetaRow icon="calendar-outline" label="Yükleme Tarihi" value={formatDate(media.uploadedAt)} />
+          <MetaRow icon="calendar-outline" label="Yükleme Tarihi" value={formatDate(media.uploadDate)} />
           <MetaRow icon="person-outline" label="Yükleyen" value={media.uploadedBy} />
-          {media.ageGroupId && (
-            <MetaRow icon="people-outline" label="Yaş Grubu" value={media.ageGroupId} />
+          {media.ageGroupIds && media.ageGroupIds.length > 0 && (
+            <MetaRow icon="people-outline" label="Yaş Grubu" value={media.ageGroupIds.join(', ')} />
           )}
         </View>
 
-        {/* Etiketler */}
-        {media.tags && media.tags.length > 0 && (
-          <View style={styles.tagsSection}>
-            <Text style={styles.tagsTitle}>Etiketler</Text>
-            <View style={styles.tagsRow}>
-              {media.tags.map((tag) => (
-                <View key={tag} style={styles.tag}>
-                  <Ionicons name="pricetag-outline" size={12} color={COLORS.primary} />
-                  <Text style={styles.tagText}>{tag}</Text>
-                </View>
-              ))}
-            </View>
-          </View>
-        )}
+
       </View>
 
       <View style={{ height: 40 }} />

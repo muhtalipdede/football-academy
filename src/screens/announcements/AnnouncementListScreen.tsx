@@ -71,7 +71,12 @@ export const AnnouncementListScreen: React.FC<{ navigation: any }> = ({ navigati
         showsVerticalScrollIndicator={false}
         renderItem={({ item }) => (
           <AnnouncementCard
-            announcement={item}
+            title={item.title}
+            content={item.content}
+            date={item.date}
+            authorName={item.authorName}
+            priority={item.priority}
+            isRead={item.isRead}
             onPress={() => navigation.navigate('AnnouncementDetail', { announcementId: item.id })}
           />
         )}

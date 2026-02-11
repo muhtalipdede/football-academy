@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS, SPACING, FONT_SIZES, BORDER_RADIUS, FONT_WEIGHTS } from '../../constants/theme';
 import { PlayerCard } from '../../components/molecules';
@@ -51,15 +51,15 @@ export const PlayerListScreen: React.FC<{ navigation: any }> = ({ navigation }) 
       </View>
 
       {/* Yaş Grubu Filtresi */}
-      <FlatList
+      <ScrollView
         horizontal
-        data={[{ id: null, name: 'Tümü' }, ...mockAgeGroups]}
-        keyExtractor={(item) => item.id || 'all'}
         showsHorizontalScrollIndicator={false}
         style={styles.filterList}
         contentContainerStyle={styles.filterContent}
-        renderItem={({ item }) => (
+      >
+        {[{ id: null, name: 'Tümü' }, ...mockAgeGroups].map((item) => (
           <TouchableOpacity
+            key={item.id || 'all'}
             style={[
               styles.filterChip,
               (selectedGroup === item.id || (!selectedGroup && !item.id)) && styles.filterChipActive,
@@ -75,8 +75,8 @@ export const PlayerListScreen: React.FC<{ navigation: any }> = ({ navigation }) 
               {item.name}
             </Text>
           </TouchableOpacity>
-        )}
-      />
+        ))}
+      </ScrollView>
 
       {/* Sporcu Listesi */}
       <FlatList
@@ -125,20 +125,24 @@ const styles = StyleSheet.create({
     color: COLORS.textPrimary,
   },
   filterList: {
-    maxHeight: 44,
-    marginBottom: SPACING.sm,
+    marginBottom: SPACING.md,
+    overflow: 'visible',
   },
   filterContent: {
     paddingHorizontal: SPACING.lg,
+    paddingVertical: SPACING.sm,
+    flexDirection: 'row',
     gap: SPACING.sm,
   },
   filterChip: {
+    height: 36,
     paddingHorizontal: SPACING.lg,
-    paddingVertical: SPACING.sm,
     borderRadius: BORDER_RADIUS.full,
     backgroundColor: COLORS.white,
     borderWidth: 1,
     borderColor: COLORS.border,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   filterChipActive: {
     backgroundColor: COLORS.primary,
@@ -146,6 +150,7 @@ const styles = StyleSheet.create({
   },
   filterChipText: {
     fontSize: FONT_SIZES.sm,
+    lineHeight: 18,
     fontWeight: FONT_WEIGHTS.medium,
     color: COLORS.textSecondary,
   },

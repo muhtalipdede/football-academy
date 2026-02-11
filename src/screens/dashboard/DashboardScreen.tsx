@@ -130,7 +130,9 @@ export const DashboardScreen: React.FC<{ navigation: any }> = ({ navigation }) =
       )}
 
       {/* Hızlı Aksiyonlar */}
-      <SectionHeader title="Hızlı Aksiyonlar" />
+      <View style={styles.section}>
+        <SectionHeader title="Hızlı Aksiyonlar" />
+      </View>
       <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.quickActions}>
         {user?.role === 'admin' && (
           <>
@@ -167,64 +169,70 @@ export const DashboardScreen: React.FC<{ navigation: any }> = ({ navigation }) =
       </ScrollView>
 
       {/* Günün Antrenmanı */}
-      <SectionHeader
-        title="Yaklaşan Antrenmanlar"
-        actionText="Tümü"
-        onAction={() => navigation.navigate('Training')}
-      />
-      {todayTrainings.map((training) => (
-        <TrainingCard
-          key={training.id}
-          title={training.title}
-          date={formatDateShort(training.date)}
-          time={`${training.startTime} - ${training.endTime}`}
-          field={training.field}
-          status={training.status}
-          ageGroup={getAgeGroupName(training.ageGroupId)}
-          onPress={() => navigation.navigate('Training', { screen: 'TrainingDetail', params: { trainingId: training.id } })}
+      <View style={styles.section}>
+        <SectionHeader
+          title="Yaklaşan Antrenmanlar"
+          actionText="Tümü"
+          onAction={() => navigation.navigate('Training')}
         />
-      ))}
+        {todayTrainings.map((training) => (
+          <TrainingCard
+            key={training.id}
+            title={training.title}
+            date={formatDateShort(training.date)}
+            time={`${training.startTime} - ${training.endTime}`}
+            field={training.field}
+            status={training.status}
+            ageGroup={getAgeGroupName(training.ageGroupId)}
+            onPress={() => navigation.navigate('Training', { screen: 'TrainingDetail', params: { trainingId: training.id } })}
+          />
+        ))}
+      </View>
 
       {/* Yaklaşan Maç */}
-      <SectionHeader
-        title="Yaklaşan Maçlar"
-        actionText="Tümü"
-        onAction={() => navigation.navigate('Matches')}
-      />
-      {upcomingMatches.map((match) => (
-        <MatchCard
-          key={match.id}
-          homeTeam={match.homeTeam}
-          awayTeam={match.awayTeam}
-          date={formatDateShort(match.date)}
-          time={match.time}
-          field={match.field}
-          status={match.status}
-          type={match.type}
-          homeScore={match.homeScore}
-          awayScore={match.awayScore}
-          onPress={() => navigation.navigate('Matches', { screen: 'MatchDetail', params: { matchId: match.id } })}
+      <View style={styles.section}>
+        <SectionHeader
+          title="Yaklaşan Maçlar"
+          actionText="Tümü"
+          onAction={() => navigation.navigate('Matches')}
         />
-      ))}
+        {upcomingMatches.map((match) => (
+          <MatchCard
+            key={match.id}
+            homeTeam={match.homeTeam}
+            awayTeam={match.awayTeam}
+            date={formatDateShort(match.date)}
+            time={match.time}
+            field={match.field}
+            status={match.status}
+            type={match.type}
+            homeScore={match.homeScore}
+            awayScore={match.awayScore}
+            onPress={() => navigation.navigate('Matches', { screen: 'MatchDetail', params: { matchId: match.id } })}
+          />
+        ))}
+      </View>
 
       {/* Son Duyurular */}
-      <SectionHeader
-        title="Son Duyurular"
-        actionText="Tümü"
-        onAction={() => navigation.navigate('More', { screen: 'Announcements' })}
-      />
-      {recentAnnouncements.map((ann) => (
-        <AnnouncementCard
-          key={ann.id}
-          title={ann.title}
-          content={ann.content}
-          date={ann.date}
-          authorName={ann.authorName}
-          priority={ann.priority}
-          isRead={ann.isRead}
-          onPress={() => navigation.navigate('More', { screen: 'AnnouncementDetail', params: { announcementId: ann.id } })}
+      <View style={styles.section}>
+        <SectionHeader
+          title="Son Duyurular"
+          actionText="Tümü"
+          onAction={() => navigation.navigate('More', { screen: 'Announcements' })}
         />
-      ))}
+        {recentAnnouncements.map((ann) => (
+          <AnnouncementCard
+            key={ann.id}
+            title={ann.title}
+            content={ann.content}
+            date={ann.date}
+            authorName={ann.authorName}
+            priority={ann.priority}
+            isRead={ann.isRead}
+            onPress={() => navigation.navigate('More', { screen: 'AnnouncementDetail', params: { announcementId: ann.id } })}
+          />
+        ))}
+      </View>
 
       <View style={{ height: 40 }} />
     </ScrollView>
@@ -315,6 +323,9 @@ const styles = StyleSheet.create({
   paymentAlertText: {
     fontSize: FONT_SIZES.sm,
     color: COLORS.textSecondary,
+  },
+  section: {
+    paddingHorizontal: SPACING.xl,
   },
   quickActions: {
     paddingHorizontal: SPACING.xl,

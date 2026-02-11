@@ -11,7 +11,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS, SPACING, FONT_SIZES, BORDER_RADIUS, FONT_WEIGHTS, SHADOWS } from '../../constants/theme';
 import { LoadingIndicator, Badge } from '../../components/atoms';
-import { mockMediaItems } from '../../mocks/media';
+import { mockMedia } from '../../mocks/media';
 import { formatDateShort } from '../../utils/helpers';
 
 const { width } = Dimensions.get('window');
@@ -38,8 +38,8 @@ export const MediaScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   }, []);
 
   const filtered = useMemo(() => {
-    if (filter === 'all') return mockMediaItems;
-    return mockMediaItems.filter((m) => m.type === filter);
+    if (filter === 'all') return mockMedia;
+    return mockMedia.filter((m) => m.type === filter);
   }, [filter]);
 
   if (loading) return <LoadingIndicator />;
@@ -101,7 +101,7 @@ export const MediaScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
               )}
             </View>
             <Text style={styles.itemTitle} numberOfLines={1}>{item.title}</Text>
-            <Text style={styles.itemDate}>{formatDateShort(item.uploadedAt)}</Text>
+            <Text style={styles.itemDate}>{formatDateShort(item.uploadDate)}</Text>
           </TouchableOpacity>
         )}
         ListEmptyComponent={

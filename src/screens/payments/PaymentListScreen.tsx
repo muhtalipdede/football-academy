@@ -102,7 +102,11 @@ export const PaymentListScreen: React.FC<{ navigation: any }> = ({ navigation })
         showsVerticalScrollIndicator={false}
         renderItem={({ item }) => (
           <PaymentCard
-            payment={item}
+            description={item.description}
+            amount={item.amount}
+            currency={item.currency}
+            dueDate={item.dueDate}
+            status={item.status}
             onPress={() => navigation.navigate('PaymentDetail', { paymentId: item.id })}
           />
         )}

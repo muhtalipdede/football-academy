@@ -30,7 +30,7 @@ export const PerformanceScreen: React.FC<{ navigation: any }> = ({ navigation })
   const playerPerformance = mockPlayers.map((player) => {
     const reports = mockPerformanceReports.filter((r) => r.playerId === player.id);
     const latest = reports.length > 0 ? reports[reports.length - 1] : null;
-    const ageGroup = mockAgeGroups.find((ag) => ag.id === player.ageGroupId);
+    const ageGroup = mockAgeGroups.find((ag) => player.ageGroupIds.includes(ag.id));
     return { player, latestReport: latest, ageGroup };
   });
 
@@ -39,15 +39,16 @@ export const PerformanceScreen: React.FC<{ navigation: any }> = ({ navigation })
     user?.role === 'parent'
       ? playerPerformance.filter((p) => p.player.parentId === user.id)
       : user?.role === 'player'
-      ? playerPerformance.filter((p) => p.player.userId === user.id)
+      ? playerPerformance.filter((p) => p.player.id === user.id)
       : playerPerformance;
 
   const getOverallScore = (report: typeof mockPerformanceReports[0] | null) => {
     if (!report) return 0;
     const { technical, physical, discipline } = report;
-    const techAvg = Object.values(technical).reduce((a, b) => a + b, 0) / Object.values(technical).length;
-    const physAvg = Object.values(physical).reduce((a, b) => a + b, 0) / Object.values(physical).length;
-    const discAvg = Object.values(discipline).reduce((a, b) => a + b, 0) / Object.values(discipline).length;
+    const avg = (metrics: typeof technical) => metrics.reduce((sum, m) => sum + (m.score / m.maxScore) * 100, 0) / metrics.length;
+    const techAvg = avg(technical);
+    const physAvg = avg(physical);
+    const discAvg = avg(discipline);
     return Math.round((techAvg + physAvg + discAvg) / 3);
   };
 
@@ -69,7 +70,7 @@ export const PerformanceScreen: React.FC<{ navigation: any }> = ({ navigation })
               }
             >
               <View style={styles.cardHeader}>
-                <Avatar name={item.player.name} size="md" />
+                <Avatar name={item.player.name} size={40} />
                 <View style={styles.info}>
                   <Text style={styles.name}>{item.player.name}</Text>
                   <Text style={styles.ageGroup}>{item.ageGroup?.name || '-'}</Text>
@@ -80,9 +81,9 @@ export const PerformanceScreen: React.FC<{ navigation: any }> = ({ navigation })
               </View>
               {item.latestReport && (
                 <View style={styles.bars}>
-                  <MiniBar label="Teknik" value={Object.values(item.latestReport.technical).reduce((a, b) => a + b, 0) / Object.values(item.latestReport.technical).length} />
-                  <MiniBar label="Fiziksel" value={Object.values(item.latestReport.physical).reduce((a, b) => a + b, 0) / Object.values(item.latestReport.physical).length} />
-                  <MiniBar label="Disiplin" value={Object.values(item.latestReport.discipline).reduce((a, b) => a + b, 0) / Object.values(item.latestReport.discipline).length} />
+                  <MiniBar label="Teknik" value={item.latestReport.technical.reduce((sum, m) => sum + (m.score / m.maxScore) * 100, 0) / item.latestReport.technical.length} />
+                  <MiniBar label="Fiziksel" value={item.latestReport.physical.reduce((sum, m) => sum + (m.score / m.maxScore) * 100, 0) / item.latestReport.physical.length} />
+                  <MiniBar label="Disiplin" value={item.latestReport.discipline.reduce((sum, m) => sum + (m.score / m.maxScore) * 100, 0) / item.latestReport.discipline.length} />
                 </View>
               )}
               {!item.latestReport && (

@@ -32,7 +32,7 @@ export const AnnouncementDetailScreen: React.FC<{ route: any }> = ({ route }) =>
     payment: { icon: 'card', color: COLORS.warning, label: 'Ödeme' },
   };
 
-  const config = typeConfig[announcement.type] || typeConfig.general;
+  const config = typeConfig.general;
 
   const priorityColors: Record<string, string> = {
     high: COLORS.error,
@@ -61,7 +61,7 @@ export const AnnouncementDetailScreen: React.FC<{ route: any }> = ({ route }) =>
           </View>
           <View style={styles.metaItem}>
             <Ionicons name="calendar-outline" size={14} color={COLORS.white + 'CC'} />
-            <Text style={styles.metaText}>{formatDate(announcement.createdAt)}</Text>
+            <Text style={styles.metaText}>{formatDate(announcement.date)}</Text>
           </View>
         </View>
       </View>
@@ -73,11 +73,11 @@ export const AnnouncementDetailScreen: React.FC<{ route: any }> = ({ route }) =>
         </View>
 
         {/* Hedef Kitle */}
-        {announcement.targetAgeGroups && announcement.targetAgeGroups.length > 0 && (
+        {announcement.ageGroupIds && announcement.ageGroupIds.length > 0 && (
           <View style={styles.card}>
             <Text style={styles.sectionTitle}>Hedef Yaş Grupları</Text>
             <View style={styles.tagRow}>
-              {announcement.targetAgeGroups.map((group) => (
+              {announcement.ageGroupIds.map((group: string) => (
                 <View key={group} style={styles.tag}>
                   <Text style={styles.tagText}>{group}</Text>
                 </View>
